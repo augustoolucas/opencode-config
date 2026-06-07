@@ -26,6 +26,12 @@ Based on the input provided, determine which type of review to perform:
 4. **--iterate**: Validate previous review issues against current changes
    - See "Iteration Mode" section below for full instructions.
 
+Additional context after the mode identifier (branch name, commit hash, or --iterate) is treated as review instructions. Examples:
+- `/pr-review main` → compare branch, full review
+- `/pr-review main focus on error handling` → compare branch, focus on error handling
+- `/pr-review --iterate only check plugin.ts` → iterate, scope to plugin.ts
+- `/pr-review abc123 skip test coverage analysis` → review commit, skip test coverage
+
 Use best judgement when processing input. If input is ambiguous, ask before proceeding.
 
 ---
