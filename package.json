@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@opencode-ai/plugin": "1.4.3",
+    "commandcode-go-opencode-provider": "^0.4.0"
+  }
+}

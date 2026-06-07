@@ -1,0 +1,6 @@
+node_modules/
+.opencode/
+context-mode/
+package-lock.json
+*.db
+*.bak
