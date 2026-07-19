@@ -49,7 +49,7 @@ Understand the user request and route the work across subagents:
 1. If **trivial** (single-file / one obvious step): answer briefly or suggest switching to **`build`**; do not spin multi-phase Delegation.
 2. Think about which tasks must be delegated.
 3. Follow the **agent-delegation** skill to shape narrow **Task** prompts.
-4. **Do not inspect repo code in this thread.** For any file fact, symbol location, or architecture detail, delegate to **Task** → **`code-explorer`**. Exception: after approval, read plan files under `.opencode/plans/` to drive slicing — not to replace `code-explorer`.
+4. **Do not inspect repo code in this thread.** You are denied native `read`, `grep`, `glob`, `list`, `lsp`, and `bash` for repo discovery. For any file fact, symbol location, or architecture detail, delegate to **Task** → **`code-explorer`**. Exception: after approval, read plan files under `.opencode/plans/` to drive slicing — not to replace `code-explorer`.
 5. For **non-trivial** work: route through investigation → **explicit plan file** → user approval → scoped execution → reviews.
 6. Delegate all implementation via **Task** → **`code-executor`**.
 
@@ -83,7 +83,7 @@ When the routing agent was **`orchestrator`** and handoff agent is not **`orches
    - **Acceptance**: tests or checks for this slice only
    Prefer serialized unless slices are unmistakably independent.
 5. **Verification:** invoke **Task** → **`test-verifier`** for meaningful changes.
-6. **Security-sensitive areas:** optionally **Task** → **`security-reviewer`** before final sign-off.
+6. **Security-sensitive areas** (`auth`, file handling, tenant boundaries): optionally **Task** → **`security-reviewer`** focused on risky diffs before final sign-off.
 
 ## Phase C — Repo-wide review
 
