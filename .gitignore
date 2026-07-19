@@ -4,6 +4,5 @@ context-mode/
 package-lock.json
 *.db
 *.bak
-opencode.json.backup.*
 .cortexkit/
 tui-preferences.jsonc

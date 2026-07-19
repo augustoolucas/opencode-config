@@ -14,22 +14,6 @@
       "env": [
         "COMMANDCODE_API_KEY"
       ]
-    },
-    "opencode-go": {
-      "models": {
-        "deepseek-v4-pro": {
-          "name": "DeepSeek V4 Pro"
-        },
-        "deepseek-v4-flash": {
-          "name": "DeepSeek V4 Flash"
-        },
-        "mimo-v2.5": {
-          "name": "MiMo V2.5"
-        },
-        "mimo-v2.5-pro": {
-          "name": "MiMo V2.5 Pro"
-        }
-      }
     }
   },
   "lsp": true,
@@ -46,31 +30,6 @@
         "--mcp"
       ],
       "enabled": true
-    }
-  },
-  "model": "opencode-go/deepseek-v4-pro",
-  "small_model": "opencode-go/deepseek-v4-flash",
-  "agent": {
-    "build": {
-      "model": "opencode-go/deepseek-v4-pro"
-    },
-    "sidekick": {
-      "model": "opencode-go/deepseek-v4-flash"
-    },
-    "explore": {
-      "model": "opencode-go/deepseek-v4-flash"
-    },
-    "research": {
-      "model": "opencode-go/mimo-v2.5-pro"
-    },
-    "design": {
-      "model": "opencode-go/mimo-v2.5-pro"
-    },
-    "reviewer": {
-      "model": "opencode-go/mimo-v2.5-pro"
-    },
-    "vision": {
-      "model": "opencode-go/mimo-v2.5"
     }
   }
 }
