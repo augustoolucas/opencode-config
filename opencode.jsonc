@@ -3,7 +3,6 @@
   "plugin": [
     "@cortexkit/opencode-magic-context",
     "./node_modules/commandcode-go-opencode-provider/plugin.ts",
-    "@mohak34/opencode-notifier@latest",
     ["./plugin-src/plan-post-approval.ts", { "plan_post_approval_handoff_agent": "orchestrator" }]
   ],
   "permission": {
