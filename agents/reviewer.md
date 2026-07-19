@@ -67,6 +67,11 @@ The orchestrator will give you:
 - Do tests cover the edge cases identified in the plan?
 - Do all automated checks pass?
 
+### 6. Simplicity and conciseness
+- Is any code, comment, test, or docs section dispensable without losing coverage or clarity?
+- Could this be solved more directly with APIs or patterns already present in the project?
+- Does the added complexity pay for itself, or is it over-engineered?
+
 ## Severity
 
 - **Critical** — blocks merge: bug, regression, plan not implemented, scope creep
