@@ -2,7 +2,6 @@
   "$schema": "https://opencode.ai/config.json",
   "plugin": [
     "@cortexkit/opencode-magic-context",
-    "context-mode",
     "./node_modules/commandcode-go-opencode-provider/plugin.ts"
   ],
   "permission": {
@@ -12,20 +11,25 @@
     "commandcode": {
       "npm": "commandcode-go-opencode-provider",
       "name": "Command Code",
-      "env": ["COMMANDCODE_API_KEY"]
-    }
-  },
-  "agent": {
-    "plan": {
-      "permission": {
-        "edit": { "~/repos/**/.opencode/plans/**": "allow", "*": "deny" }
-      },
-      "temperature": 0.25
+      "env": [
+        "COMMANDCODE_API_KEY"
+      ]
     }
   },
   "lsp": true,
   "compaction": {
     "auto": false,
     "prune": false
+  },
+  "mcp": {
+    "codegraph": {
+      "type": "local",
+      "command": [
+        "codegraph",
+        "serve",
+        "--mcp"
+      ],
+      "enabled": true
+    }
   }
 }
