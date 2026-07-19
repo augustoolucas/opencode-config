@@ -95,6 +95,7 @@ Once implementation is coherent:
 
 ## Rules
 
+- After every implementation change is committed, automatically delegate to `reviewer` before reporting to the user. Do not wait for the user to ask.
 - Keep every child Task prompt narrow (follow agent-delegation skill).
 - Role separation: `planner` explores and plans, `builder` implements, `reviewer` validates. Never mix.
 - Maintain consistent `todowrite` hygiene.
