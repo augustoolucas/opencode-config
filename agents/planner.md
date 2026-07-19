@@ -5,6 +5,9 @@ permission:
   edit:
     ".opencode/plans/**": allow
     "*": deny
+  write:
+    ".opencode/plans/**": allow
+    "*": deny
   read: allow
   grep: allow
   glob: allow
@@ -12,6 +15,7 @@ permission:
   bash:
     "*": deny
     "git *": allow
+    "mkdir *": allow
     "ls *": allow
     "find *": allow
     "cat *": allow
