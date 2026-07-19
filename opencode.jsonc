@@ -18,17 +18,6 @@
       "env": [
         "COMMANDCODE_API_KEY"
       ]
-    },
-    "opencode": {},
-    "deepseek": {
-      "models": {
-        "deepseek-v4-pro": {
-          "reasoningEffort": "max"
-        },
-        "deepseek-v4-flash": {
-          "reasoningEffort": "max"
-        }
-      }
     }
   },
   "default_agent": "orchestrator",
@@ -51,15 +40,8 @@
     }
   },
   "agent": {
-    "build": {
-      "model": "opencode-go/deepseek-v4-pro"
-    },
-    "plan": {
-      "model": "opencode-go/deepseek-v4-pro"
-    },
     "orchestrator": {
-      "model": "opencode-go/deepseek-v4-pro",
-      "temperature": 0.2
+      "temperature": 0.25
     },
     "planner": {
       "model": "opencode-go/deepseek-v4-pro",
