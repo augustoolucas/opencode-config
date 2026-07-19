@@ -1,7 +1,12 @@
 {
   "dependencies": {
-    "@opencode-ai/plugin": "1.4.3",
+    "@opencode-ai/plugin": "1.4.7",
     "@cortexkit/opencode-magic-context": "0.31.0",
     "commandcode-go-opencode-provider": "^0.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.7",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
   }
 }
