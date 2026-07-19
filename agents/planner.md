@@ -56,8 +56,8 @@ The orchestrator will give you:
 - Files to read (no changes):
 
 ## Implementation plan
-1. <Step>
-2. <Step>
+1. **<What>** — files: `<paths>` — verify: `<how to check>`
+2. **<What>** — files: `<paths>` — verify: `<how to check>`
 ...
 
 ## Risks and edge cases
@@ -66,6 +66,8 @@ The orchestrator will give you:
 ## Verification
 - <How to verify the change works>
 ```
+
+Each step must name at least one file and describe the concrete change. Vague steps like 'Refactor the auth module' without paths will cause the builder to escalate.
 
 5. Report the plan file path back to the orchestrator.
 

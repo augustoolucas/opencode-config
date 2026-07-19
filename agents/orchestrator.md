@@ -75,6 +75,11 @@ When the routing agent was **`orchestrator`** and handoff agent is not **`orches
    - **Exact scope**: allowed paths, forbidden areas
    - **Acceptance**: tests or checks for this slice only
    Prefer serialized unless slices are unmistakably independent.
+4a. **Read builder output:** After each builder task returns, check its STATUS:
+   - `complete` → proceed to the next slice or verification.
+   - `partial` → note the gaps. If the missing pieces are small, include them in the next builder task. If substantial, re-delegate this slice with tighter scope.
+   - `blocked` → report the blocker to the user with the builder's GAPS, pause.
+   - `escalate` → the builder needs a judgment call. Present the GAPS via `question` to the user, then replan or re-delegate based on their answer.
 5. **Verification:** builder handles its own verification; for meaningful changes, include verification commands in the builder task spec.
 6. **Security-sensitive areas** (`auth`, file handling, tenant boundaries): optionally include security review criteria in the builder task spec or delegate to **`reviewer`** focused on risky diffs before final sign-off.
 
@@ -83,7 +88,10 @@ When the routing agent was **`orchestrator`** and handoff agent is not **`orches
 Once implementation is coherent:
 
 1. Delegate to **`reviewer`** with repository root and changed paths, asking for a correctness and regression-risk assessment.
-2. Summarize feedback; do not patch code — reopen slices via **`builder`** if fixes are substantial.
+2. Read the reviewer's verdict and act:
+   - **Approved** → report to user, implementation complete.
+   - **Adjustments needed** → delegate each Critical and Medium issue as a focused builder task. Re-review only if the follow-up diff is meaningful.
+   - **Rejected** → if the reason is "plan not implemented" or "design flaw": return to the planner with the reviewer's feedback. If "3+ Critical" bugs: prioritize and re-delegate to builder. If "scope creep": re-delegate to builder to remove unrelated changes. Do not re-implement a broken plan.
 
 ## Rules
 
