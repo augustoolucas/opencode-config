@@ -1,6 +1,6 @@
 ---
 name: worktrees
-description: Manage Git worktrees as isolated coding lanes for complex, risky, or parallel work. Orchestrator-only protocol — the orchestrator plans, delegates, validates, integrates, and cleans up. Subagents (code-executor, code-explorer, test-verifier) run scoped to the worktree path.
+description: Manage Git worktrees as isolated coding lanes for complex, risky, or parallel work. Orchestrator-only protocol — the orchestrator plans, delegates, validates, integrates, and cleans up. Subagents (builder, planner) run scoped to the worktree path.
 ---
 
 # Worktrees — isolated coding lanes
@@ -40,11 +40,11 @@ Add to `.gitignore` (root of the repo being worked on, NOT the opencode config r
 # <<< opencode:worktrees
 ```
 
-The orchestrator must verify this block exists before creating the first worktree. If absent, delegate its addition to `code-executor` and wait for completion before proceeding.
+The orchestrator must verify this block exists before creating the first worktree. If absent, delegate its addition to `builder` and wait for completion before proceeding.
 
 ## Phase 1 — Plan & Setup
 
-1. **Analyze the task.** Is it risky, multi-file, parallelizable, or experimental? If yes, propose a worktree. If it's a trivial single-file change, skip worktrees and delegate directly to `code-executor` in the main checkout.
+1. **Analyze the task.** Is it risky, multi-file, parallelizable, or experimental? If yes, propose a worktree. If it's a trivial single-file change, skip worktrees and delegate directly to `builder` in the main checkout.
 
 2. **Choose a slug.** Short, descriptive, kebab-case. Examples: `refactor-auth`, `fix-parser-leak`, `spike-graphql`.
 
@@ -57,13 +57,13 @@ The orchestrator must verify this block exists before creating the first worktre
    Purpose: <one-line description>
    ```
 
-5. **On approval**, delegate to `code-executor`:
+5. **On approval**, delegate to `builder`:
    ```
    git worktree add -b orch/<slug> .opencode/worktrees/<slug> <base-branch>
    ```
    Use `workdir` parameter set to the repo root.
 
-6. **Record in manifest.** Delegate to `code-executor` to create or update `.opencode/worktrees.json`:
+6. **Record in manifest.** Delegate to `builder` to create or update `.opencode/worktrees.json`:
    ```json
    {
      "lanes": {
@@ -83,13 +83,13 @@ The orchestrator must verify this block exists before creating the first worktre
 
 All subagent work for this lane runs scoped to the worktree path.
 
-1. **Exploration** — delegate to `code-explorer` with `workdir` set to the worktree path. Keep prompts narrow: specific files, specific questions.
+1. **Exploration** — delegate to `planner` with `workdir` set to the worktree path. Keep prompts narrow: specific files, specific questions.
 
-2. **Implementation** — delegate to `code-executor` with `workdir` set to the worktree path. One slice per delegation. Provide the standard 5-part spec (objective, files, interfaces, constraints, verification).
+2. **Implementation** — delegate to `builder` with `workdir` set to the worktree path. One slice per delegation. Provide the standard 5-part spec (objective, files, interfaces, constraints, verification).
 
-3. **Parallel work** — when multiple lanes are active and tasks are independent, spawn `code-executor` tasks across different worktrees in parallel. Never parallelize tasks that touch the same file or depend on each other.
+3. **Parallel work** — when multiple lanes are active and tasks are independent, spawn `builder` tasks across different worktrees in parallel. Never parallelize tasks that touch the same file or depend on each other.
 
-4. **Verification** — after each implementation slice, delegate to `test-verifier` scoped to the worktree: `npm run lint`, `npm test`, type-check, etc.
+4. **Verification** — after each implementation slice, delegate to `builder` scoped to the worktree: `npm run lint`, `npm test`, type-check, etc.
 
 ## Phase 3 — Integration & Validation
 
@@ -101,13 +101,13 @@ Once all slices in a lane are complete:
    ```
    git diff <base-branch>...orch/<slug>
    ```
-   Delegate to `code-reviewer` with the diff and the original plan. The reviewer checks correctness, scope creep, and regression risk.
+   Delegate to `reviewer` with the diff and the original plan. The reviewer checks correctness, scope creep, and regression risk.
 
 3. **Show the diff to the user.** Summarize what changed, files touched, and the reviewer's verdict. Ask for merge approval.
 
 ## Phase 4 — Cleanup & Pruning
 
-1. **On merge approval**, delegate to `code-executor` (from the main checkout, NOT the worktree):
+1. **On merge approval**, delegate to `builder` (from the main checkout, NOT the worktree):
    ```
    git merge orch/<slug>
    ```
@@ -121,7 +121,7 @@ Once all slices in a lane are complete:
    Path: .opencode/worktrees/<slug>/
    ```
 
-4. **On approval**, delegate to `code-executor`:
+4. **On approval**, delegate to `builder`:
    ```
    git worktree remove .opencode/worktrees/<slug>
    git branch -D orch/<slug>
@@ -139,7 +139,7 @@ Once all slices in a lane are complete:
 
 ## When NOT to use worktrees
 
-- Single-file trivial changes — direct `code-executor` delegation is faster
+- Single-file trivial changes — direct `builder` delegation is faster
 - Repos with complex submodule states — worktrees add complexity
 - Changes that require the exact main checkout environment (e.g., config that only exists there)
 - Quick fixes where the overhead of lane setup exceeds the task itself

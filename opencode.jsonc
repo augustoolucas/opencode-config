@@ -14,7 +14,6 @@
   },
   "provider": {
     "commandcode": {
-      "npm": "commandcode-go-opencode-provider",
       "name": "Command Code",
       "env": [
         "COMMANDCODE_API_KEY"
@@ -62,44 +61,16 @@
       "model": "opencode-go/deepseek-v4-pro",
       "temperature": 0.2
     },
-    "plan-runner": {
-      "model": "opencode-go/deepseek-v4-flash",
+    "planner": {
+      "model": "opencode-go/deepseek-v4-pro",
       "temperature": 0.2
     },
-    "code-explorer": {
-      "model": "opencode-go/deepseek-v4-flash",
-      "temperature": 0.2
-    },
-    "code-executor": {
-      "model": "opencode-go/deepseek-v4-flash",
+    "builder": {
+      "model": "opencode-go/deepseek-v4-pro",
       "temperature": 0.1
     },
-    "test-verifier": {
-      "model": "opencode-go/deepseek-v4-flash",
-      "temperature": 0.1
-    },
-    "spec-critic": {
-      "model": "opencode-go/deepseek-v4-flash",
-      "temperature": 0.4
-    },
-    "security-reviewer": {
-      "model": "opencode-go/deepseek-v4-flash",
-      "temperature": 0.1
-    },
-    "docs-reviewer": {
-      "model": "opencode-go/deepseek-v4-flash",
-      "temperature": 0.1
-    },
-    "code-reviewer": {
-      "model": "opencode-go/deepseek-v4-flash",
-      "temperature": 0.1
-    },
-    "api-docs-researcher": {
-      "model": "opencode-go/deepseek-v4-flash",
-      "temperature": 0.1
-    },
-    "host-security-investigator": {
-      "model": "opencode-go/deepseek-v4-flash",
+    "reviewer": {
+      "model": "opencode-go/deepseek-v4-pro",
       "temperature": 0.1
     }
   }

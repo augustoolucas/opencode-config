@@ -29,9 +29,9 @@ When the user includes `--sessions` in their reflect command, shift to session a
 
 ### Session Discovery
 
-1. **Locate the session database.** The opencode session DB is typically at `~/.local/share/opencode/opencode.db`. Delegate to `code-explorer` to confirm the path exists and read the schema.
+1. **Locate the session database.** The opencode session DB is typically at `~/.local/share/opencode/opencode.db`. Delegate to `planner` to confirm the path exists and read the schema.
 
-2. **Query recent sessions.** Delegate to `code-executor` to run a SQLite query. Use Node (available via nvm) since it ships with built-in SQLite support (Node 22+):
+2. **Query recent sessions.** Delegate to `builder` to run a SQLite query. Use Node (available via nvm) since it ships with built-in SQLite support (Node 22+):
 
    ```bash
    export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" && \
@@ -75,7 +75,7 @@ For each analyzed session, produce a structured summary:
     "Create /test-ci command"
   ],
   "duration_minutes": 18,
-  "agents_used": ["orchestrator", "code-executor", "code-explorer"],
+  "agents_used": ["orchestrator", "builder", "planner"],
   "confidence": 0.85
 }
 ```
@@ -197,7 +197,7 @@ Before proposing anything, identify what already exists:
 - prompt overrides and configuration in `opencode.jsonc`
 - project playbooks, docs, and local workflow notes
 
-If an existing asset already covers the candidate, recommend extending or using that asset instead of creating a near-duplicate. Delegate the inventory to `code-explorer` with narrow prompts per category.
+If an existing asset already covers the candidate, recommend extending or using that asset instead of creating a near-duplicate. Delegate the inventory to `planner` with narrow prompts per category.
 
 ### 2. Find Repeated Workflow Patterns
 
@@ -255,7 +255,7 @@ Skip:
 Proceed with the proposed edits?
 ```
 
-When applying changes, preserve existing user settings and prefer narrow, append-only edits. Delegate all file writes to `code-executor`.
+When applying changes, preserve existing user settings and prefer narrow, append-only edits. Delegate all file writes to `builder`.
 
 ## Output Format
 

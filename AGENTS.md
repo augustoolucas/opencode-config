@@ -42,15 +42,15 @@ Subagent ids below match markdown definitions in `~/.config/opencode/agents/<id>
 
 **Agent role separation (strict):**
 
-- `code-explorer` — reads and explores codebase files, architecture, and symbols. Read-only. Never writes.
-- `code-executor` — writes and implements code. Never explores.
-- `code-reviewer` — reviews diffs and implemented code. Never writes, never explores.
+- `planner` — explores and plans. Understands the codebase and designs solutions. Never implements.
+- `builder` — implements code. Writes files, runs verification. Never explores for discovery.
+- `reviewer` — validates diffs and implemented code. Never writes, never explores.
 
-**Typical order (adapt to the task):** `code-explorer` for reading and exploring codebase files, architecture mapping, and symbol location → `api-docs-researcher` when behavior depends on external APIs/docs → `code-executor` for implementation → `test-verifier`, plus `security-reviewer` when the change touches sensitive surfaces → `code-reviewer` on a stable diff → `docs-reviewer` when user-facing surface (CLI, config, setup, public API) changed. Use `spec-critic` early when the plan is fuzzy or cross-cutting. Use `host-security-investigator` for read-only hosting and service posture (network, TLS, IaC in-repo, containers); it complements `security-reviewer`, which targets application code and diffs.
+**Typical order (adapt to the task):** `planner` (explore + plan) → `builder` (implement) → `reviewer` (validate).
 
-When the default agent is **`orchestrator`**, the usual pipeline is **`plan-runner`** (Task) for plan files under `.opencode/plans/`, **`question` / PlanApprove** in this session by the orchestrator, then **`code-executor`** (Task per slice), then **`code-reviewer`** and **`docs-reviewer`** (still via Task from the orchestrator). The standalone **`plan`** and **`build`** agents are unchanged — use **`build`** for direct coding or Tab to **`plan`** for the classic Plan workflow without Tasks.
+When the default agent is **`orchestrator`**, the usual pipeline is **`planner`** (Task) for plan files under `.opencode/plans/`, **`question` / PlanApprove** in this session by the orchestrator, then **`builder`** (Task per slice), then **`reviewer`** (still via Task from the orchestrator). The standalone **`plan`** and **`build`** agents are unchanged — use **`build`** for direct coding or Tab to **`plan`** for the classic Plan workflow without Tasks.
 
-For `orchestrator`, delegation is a permission boundary, not just a workflow preference. It must not use native `read`, `glob`, `grep`, `list`, `lsp`, or `bash` tools for repo discovery. If it lacks repo context, it delegates to `code-explorer`; if delegation is unnecessary overhead for a trivial direct edit, switch to `build` rather than inspecting locally.
+For `orchestrator`, delegation is a permission boundary, not just a workflow preference. It must not use native `read`, `glob`, `grep`, `list`, `lsp`, or `bash` tools for repo discovery. If it lacks repo context, it delegates to `planner`; if delegation is unnecessary overhead for a trivial direct edit, switch to `build` rather than inspecting locally.
 
 **Inline (no Task):** trivial one-file edits, single obvious tool calls, or when the user explicitly wants everything in one thread. This exception does not let `orchestrator` inspect or edit repo files directly; use `build` for direct coding.
 
@@ -74,4 +74,4 @@ For `orchestrator`, delegation is a permission boundary, not just a workflow pre
 
 ## Project rules
 
-- If there is an `AGENTS.md` at the **project root** of the repo you are working in, read it **before** large changes. That file should describe stack, how to run tests/lint/build, and team conventions; this global file only defines _how_ to work with OpenCode. Repos without one still benefit from adding it so `build` and `test-verifier` agree on commands.
+- If there is an `AGENTS.md` at the **project root** of the repo you are working in, read it **before** large changes. That file should describe stack, how to run tests/lint/build, and team conventions; this global file only defines _how_ to work with OpenCode. Repos without one still benefit from adding it so `build` and `builder` agree on commands.

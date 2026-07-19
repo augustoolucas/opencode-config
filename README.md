@@ -12,18 +12,11 @@ Personal configuration for [opencode](https://opencode.ai). Uses the [small-open
 ├── tui.json               # TUI plugin overrides
 ├── AGENTS.md              # Global agent rules and delegation guidelines
 ├── dcp.jsonc              # Dynamic Context Pruning config
-├── agents/                # Agent definitions (11 subagents + orchestrator)
+├── agents/                # Agent definitions (orchestrator + 3 subagents)
 │   ├── orchestrator.md
-│   ├── plan-runner.md
-│   ├── code-explorer.md
-│   ├── code-executor.md
-│   ├── code-reviewer.md
-│   ├── docs-reviewer.md
-│   ├── security-reviewer.md
-│   ├── spec-critic.md
-│   ├── test-verifier.md
-│   ├── api-docs-researcher.md
-│   └── host-security-investigator.md
+│   ├── planner.md
+│   ├── builder.md
+│   └── reviewer.md
 ├── plugin-src/            # Custom plugins
 │   └── plan-post-approval.ts
 ├── skills/                # Reusable workflow skills
@@ -31,7 +24,8 @@ Personal configuration for [opencode](https://opencode.ai). Uses the [small-open
 │   ├── reflect/           # Session archaeology and workflow analysis
 │   ├── agent-delegation/  # Delegation routing decisions
 │   ├── pythonic-quality/  # Python code quality patterns
-│   └── security-investigation/
+│   ├── skill-creator/     # Skill creation guide
+│   └── task-management/   # Feature subtask tracking CLI
 └── commands/              # Custom slash commands
     ├── pr-review.md
     └── patch-context-mode.md
@@ -61,32 +55,25 @@ export COMMANDCODE_API_KEY="your-key-here"
 
 ## Agents
 
-The **orchestrator** is the default entry point for non-trivial work. It cannot edit files directly — it coordinates through specialized subagents:
+The **orchestrator** coordinates work through 3 subagents:
 
 | Agent | Model | Role |
 |---|---|---|
 | orchestrator | deepseek-v4-pro | Coordinator — plans, delegates, reviews. No repo access. |
-| build (native) | deepseek-v4-pro | OpenCode default for simple tasks |
-| plan (native) | deepseek-v4-pro | OpenCode default for planning |
-| plan-runner | deepseek-v4-flash | Writes implementation plans |
-| code-explorer | deepseek-v4-flash | Read-only codebase exploration |
-| code-executor | deepseek-v4-flash | Implements scoped coding tasks |
-| code-reviewer | deepseek-v4-flash | Reviews diffs for correctness |
-| docs-reviewer | deepseek-v4-flash | Checks documentation impact |
-| security-reviewer | deepseek-v4-flash | Identifies security risks |
-| spec-critic | deepseek-v4-flash | Challenges plans before coding |
-| test-verifier | deepseek-v4-flash | Runs tests, lint, type checking |
-| api-docs-researcher | deepseek-v4-flash | Researches external API docs |
-| host-security-investigator | deepseek-v4-flash | Audits infrastructure security |
+| planner | deepseek-v4-pro | Explores code + writes implementation plans |
+| builder | deepseek-v4-pro | Implements scoped coding tasks |
+| reviewer | deepseek-v4-pro | Validates diff against plan; checks bugs and regressions |
 
-**Workflow:** For non-trivial tasks, the orchestrator routes through plan → approve → execute → review phases. For simple tasks, switch to the native `build` agent.
+**Workflow:** orchestrator → planner (explore + plan) → builder (implement) → reviewer (validate).
 
 ## Skills
 
 - **worktrees** — Git worktree lanes for isolated, parallel, or risky work
 - **reflect** — Session archaeology: find repeated patterns and suggest reusable assets
-- **agent-delegation** — Decision table for routing work to subagents
+- **agent-delegation** — Routing decisions for the 3-subagent workflow
 - **pythonic-quality** — Python code quality and design patterns
+- **skill-creator** — Guide for creating effective skills
+- **task-management** — Feature subtask tracking CLI
 
 ## Other features
 
