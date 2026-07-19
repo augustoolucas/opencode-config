@@ -7,10 +7,6 @@
   ],
   "permission": {
     "websearch": "allow",
-    "bash": {
-      "*": "ask"
-    },
-    "edit": "ask"
   },
   "provider": {
     "commandcode": {
@@ -45,7 +41,7 @@
     },
     "planner": {
       "model": "opencode-go/deepseek-v4-pro",
-      "temperature": 0.2
+      "temperature": 0.25
     },
     "builder": {
       "model": "opencode-go/deepseek-v4-pro",
