@@ -13,8 +13,8 @@ permission:
     "git add*": allow
     "git commit*": ask
     "git push*": ask
-    "env git commit*": deny
-    "env git push*": deny
+    "command git*": deny
+    "env git*": deny
     "cat *.env*": deny
     "git reset --hard*": ask
     "git clean*": ask
