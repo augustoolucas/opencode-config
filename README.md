@@ -38,10 +38,8 @@ After installing YACAO, the agent symlinks will connect automatically. Restart o
 │   ├── pythonic-quality/  # Python code quality patterns
 │   ├── skill-creator/     # Skill creation guide
 │   └── task-management/   # Feature subtask tracking CLI
-├── scripts/
 └── commands/              # Custom slash commands
-    ├── pr-review.md
-    └── patch-context-mode.md
+    └── pr-review.md
 ```
 
 ## Environment Variables
