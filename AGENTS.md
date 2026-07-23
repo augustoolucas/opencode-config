@@ -57,6 +57,7 @@ For `orchestrator`, delegation is a permission boundary, not just a workflow pre
 ## Git safety
 
 - Never push without explicit user intent.
+- LiteLLM-related changes are strictly local-only for this repository and must never be committed or pushed to the remote, including LiteLLM configuration and any dependency or config changes associated with LiteLLM.
 - Never create destructive history edits without explicit need.
 - Prefer showing the diff before commit-level actions.
 
