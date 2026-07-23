@@ -9,3 +9,8 @@ opencode.json
 tui-preferences.jsonc
 dist/
 opencode-notifier-state.json
+agents/orchestrator.md
+agents/planner.md
+agents/builder.md
+agents/reviewer.md
+agents/question.md
