@@ -8,7 +8,7 @@ Personal configuration for [opencode](https://opencode.ai). Uses the [small-open
 .
 ├── opencode.jsonc         # Main config (providers, plugins, agents, model routing)
 ├── package.json           # Plugin dependencies
-├── tsconfig.json          # TypeScript config for plugin-src
+├── tsconfig.json          # TypeScript config
 ├── tui.json               # TUI plugin overrides
 ├── AGENTS.md              # Global agent rules and delegation guidelines
 ├── dcp.jsonc              # Dynamic Context Pruning config
@@ -17,8 +17,6 @@ Personal configuration for [opencode](https://opencode.ai). Uses the [small-open
 │   ├── planner.md
 │   ├── builder.md
 │   └── reviewer.md
-├── plugin-src/            # Custom plugins
-│   └── plan-post-approval.ts
 ├── skills/                # Reusable workflow skills
 │   ├── worktrees/         # Git worktree lanes for isolated parallel work
 │   ├── reflect/           # Session archaeology and workflow analysis
@@ -51,7 +49,6 @@ export COMMANDCODE_API_KEY="your-key-here"
 
 - **@cortexkit/opencode-magic-context** — long-term memory across sessions
 - **commandcode-go-opencode-provider** — CommandCode model provider
-- **plan-post-approval** — automated handoff after plan approval in orchestrator mode
 
 ## Agents
 
