@@ -1,6 +1,21 @@
 # opencode-config
 
-Personal configuration for [opencode](https://opencode.ai). Uses the [small-opencode-orchestrator](https://github.com/tempont/small-opencode-orchestrator) multi-agent pattern with specialized subagents for planning, exploration, execution, and review.
+Personal configuration for [opencode](https://opencode.ai). For agent workflow documentation, see [YACAO](https://github.com/augustoolucas/yacao).
+
+## Install
+
+Give this repo URL to your opencode agent:
+
+```
+git clone https://github.com/augustoolucas/opencode-config ~/.config/opencode
+cd ~/.config/opencode && npm install
+```
+
+Then install the agent orchestration layer:
+
+> See [YACAO](https://github.com/augustoolucas/yacao) — your agent will follow the install instructions there to set up the orchestrator and subagents.
+
+After installing YACAO, the agent symlinks will connect automatically. Restart opencode.
 
 ## Structure
 
@@ -9,32 +24,24 @@ Personal configuration for [opencode](https://opencode.ai). Uses the [small-open
 ├── opencode.jsonc         # Main config (providers, plugins, agents, model routing)
 ├── package.json           # Plugin dependencies
 ├── tsconfig.json          # TypeScript config
-├── tui.json               # TUI plugin overrides
+├── tui.json               # TUI plugin overrides (tui-preferences.jsonc also exists, gitignored)
 ├── AGENTS.md              # Global agent rules and delegation guidelines
-├── dcp.jsonc              # Dynamic Context Pruning config
-├── agents/                # Agent definitions (orchestrator + 3 subagents)
+├── agents/                # Agent definitions (orchestrator + 4 subagents, via symlink to YACAO)
 │   ├── orchestrator.md
 │   ├── planner.md
 │   ├── builder.md
-│   └── reviewer.md
+│   ├── reviewer.md
+│   └── question.md
 ├── skills/                # Reusable workflow skills
 │   ├── worktrees/         # Git worktree lanes for isolated parallel work
 │   ├── reflect/           # Session archaeology and workflow analysis
-│   ├── agent-delegation/  # Delegation routing decisions
 │   ├── pythonic-quality/  # Python code quality patterns
 │   ├── skill-creator/     # Skill creation guide
 │   └── task-management/   # Feature subtask tracking CLI
+├── scripts/
 └── commands/              # Custom slash commands
     ├── pr-review.md
     └── patch-context-mode.md
-```
-
-## Setup
-
-```bash
-git clone git@github.com:augustoolucas/opencode-config.git ~/.config/opencode
-cd ~/.config/opencode
-npm install
 ```
 
 ## Environment Variables
@@ -49,28 +56,6 @@ export COMMANDCODE_API_KEY="your-key-here"
 
 - **@cortexkit/opencode-magic-context** — long-term memory across sessions
 - **commandcode-go-opencode-provider** — CommandCode model provider
-
-## Agents
-
-The **orchestrator** coordinates work through 3 subagents:
-
-| Agent | Model | Role |
-|---|---|---|
-| orchestrator | deepseek-v4-pro | Coordinator — plans, delegates, reviews. No repo access. |
-| planner | deepseek-v4-pro | Explores code + writes implementation plans |
-| builder | deepseek-v4-pro | Implements scoped coding tasks |
-| reviewer | deepseek-v4-pro | Validates diff against plan; checks bugs and regressions |
-
-**Workflow:** orchestrator → planner (explore + plan) → builder (implement) → reviewer (validate).
-
-## Skills
-
-- **worktrees** — Git worktree lanes for isolated, parallel, or risky work
-- **reflect** — Session archaeology: find repeated patterns and suggest reusable assets
-- **agent-delegation** — Routing decisions for the 3-subagent workflow
-- **pythonic-quality** — Python code quality and design patterns
-- **skill-creator** — Guide for creating effective skills
-- **task-management** — Feature subtask tracking CLI
 
 ## Other features
 
