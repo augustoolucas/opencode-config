@@ -8,9 +8,6 @@
     "skipLibCheck": true,
     "types": ["node"]
   },
-  "include": [
-    "skills/**/*.ts"
-  ],
   "exclude": [
     "node_modules"
   ]

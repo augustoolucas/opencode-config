@@ -13,7 +13,7 @@ cd ~/.config/opencode && npm install
 
 Then install the agent orchestration layer:
 
-> See [YACAO](https://github.com/augustoolucas/yacao) — your agent will follow the install instructions there to set up the orchestrator and subagents.
+> See [YACAO](https://github.com/augustoolucas/yacao) — your agent will follow the install instructions there to set up the workflow.
 
 After installing YACAO, the agent symlinks will connect automatically. Restart opencode.
 
@@ -26,18 +26,9 @@ After installing YACAO, the agent symlinks will connect automatically. Restart o
 ├── tsconfig.json          # TypeScript config
 ├── tui.json               # TUI plugin overrides (tui-preferences.jsonc also exists, gitignored)
 ├── AGENTS.md              # Global agent rules and delegation guidelines
-├── agents/                # Agent definitions (orchestrator + 4 subagents, via symlink to YACAO)
+├── agents/                # Agent definitions (two-agent YACAO setup)
 │   ├── orchestrator.md
-│   ├── planner.md
 │   ├── builder.md
-│   ├── reviewer.md
-│   └── question.md
-├── skills/                # Reusable workflow skills
-│   ├── worktrees/         # Git worktree lanes for isolated parallel work
-│   ├── reflect/           # Session archaeology and workflow analysis
-│   ├── pythonic-quality/  # Python code quality patterns
-│   ├── skill-creator/     # Skill creation guide
-│   └── task-management/   # Feature subtask tracking CLI
 └── commands/              # Custom slash commands
     └── pr-review.md
 ```

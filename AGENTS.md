@@ -38,21 +38,20 @@ You are operating as a coding agent for an experienced developer.
 
 ## Delegation
 
-Subagent ids below match markdown definitions in `~/.config/opencode/agents/<id>.md` (or `.opencode/agents/` per project). Invoke them with the **Task** tool when the primary agent is allowed to (see `permission.task` in those agents' YAML frontmatter for `build` / `plan` / `orchestrator`), or with `@<id>` when appropriate. Do not replicate long read-only review, verification, or doc research in the primary thread when a subagent fits—delegate with a tight prompt instead.
+Subagent ids below match markdown definitions in `~/.config/opencode/agents/<id>.md` (or `.opencode/agents/` per project). Invoke them with the **Task** tool when the primary agent is allowed to (see `permission.task` in those agents' YAML frontmatter for `build` / `plan` / `orchestrator`), or with `@<id>` when appropriate. Keep child Task prompts narrow: Goal (1-2 sentences), Context (prior decisions, relevant history), Scope (exact paths), Expected return shape.
 
 **Agent role separation (strict):**
 
-- `planner` — explores and plans. Understands the codebase and designs solutions. Never implements.
-- `builder` — implements code. Writes files, runs verification. Never explores for discovery.
-- `reviewer` — validates diffs and implemented code. Never writes, never explores.
+- `orchestrator` — the only primary agent. It clarifies, explores, answers questions, writes plan files, reviews diffs, and reports results. It may write only under `.opencode/plans/`.
+- `builder` — implements code. Writes files, runs verification. Never explores for discovery or delegates further tasks.
 
-**Typical order (adapt to the task):** `planner` (explore + plan) → `builder` (implement) → `reviewer` (validate).
+**Typical order (adapt to the task):** `orchestrator` (clarify / explore / plan) → `builder` (implement) → `orchestrator` (review / report).
 
-When the default agent is **`orchestrator`**, the usual pipeline is **`planner`** (Task) for plan files under `.opencode/plans/`, **`question` / PlanApprove** in this session by the orchestrator, then **`builder`** (Task per slice), then **`reviewer`** (still via Task from the orchestrator). The standalone **`plan`** and **`build`** agents are unchanged — use **`build`** for direct coding or Tab to **`plan`** for the classic Plan workflow without Tasks.
+When the default agent is **`orchestrator`**, the usual pipeline is: clarify the request, answer codebase questions directly when no change is needed, or for non-trivial changes explore the repo and write a plan file under `.opencode/plans/`, get user approval in this session, delegate implementation to **`builder`**, then review the diff directly before reporting back. The standalone **`plan`** and **`build`** agents are unchanged — use **`build`** for direct coding or Tab to **`plan`** for the classic Plan workflow without Tasks.
 
-For `orchestrator`, delegation is a permission boundary, not just a workflow preference. It must not use native `read`, `glob`, `grep`, `list`, `lsp`, or `bash` tools for repo discovery. If it lacks repo context, it delegates to `planner`; if delegation is unnecessary overhead for a trivial direct edit, switch to `build` rather than inspecting locally.
+For `orchestrator`, exploration and review happen in the primary thread. Use native `read`, `glob`, `grep`, `list`, `lsp`, `bash`, `webfetch`, and `websearch` tools directly when needed to understand the repo, write plans, answer questions, and validate builder output. Delegate only implementation work to `builder`.
 
-**Inline (no Task):** trivial one-file edits, single obvious tool calls, or when the user explicitly wants everything in one thread. This exception does not let `orchestrator` inspect or edit repo files directly; use `build` for direct coding.
+**Inline (no Task):** codebase questions, planning, review, single obvious tool calls, or when the user explicitly wants everything in one thread. For code changes, prefer `builder` unless the user explicitly requests the direct `build` agent instead.
 
 ## Git safety
 

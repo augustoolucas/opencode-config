@@ -4,9 +4,6 @@
     "@cortexkit/opencode-magic-context",
     "./node_modules/commandcode-go-opencode-provider/plugin.ts"
   ],
-  "permission": {
-    "websearch": "allow",
-  },
   "provider": {
     "commandcode": {
       "name": "Command Code",
