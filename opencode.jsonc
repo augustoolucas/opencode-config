@@ -29,6 +29,12 @@
         "--mcp"
       ],
       "enabled": true
+    },
+    "crw": {
+      "type": "local",
+      "command": ["crw-mcp"],
+      "enabled": true,
+      "environment": { "CRW_API_URL": "http://127.0.0.1:3002" }
     }
   }
 }
