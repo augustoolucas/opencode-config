@@ -75,3 +75,7 @@ For `orchestrator`, exploration and review happen in the primary thread. Use nat
 ## Project rules
 
 - If there is an `AGENTS.md` at the **project root** of the repo you are working in, read it **before** large changes. That file should describe stack, how to run tests/lint/build, and team conventions; this global file only defines _how_ to work with OpenCode. Repos without one still benefit from adding it so `build` and `builder` agree on commands.
+
+## Knowledge base
+
+There is a shared markdown knowledge base at `~/repos/knowledge` (llm-wiki pattern: `raw/` immutable sources, `wiki/` LLM-maintained pages, `AGENTS.md` schema). When a task involves personal knowledge, past decisions, or cross-project context, consult `~/repos/knowledge/wiki/index.md` first and follow the schema there for ingest/query/lint workflows.
