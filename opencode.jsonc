@@ -16,6 +16,10 @@
     }
   },
   "default_agent": "orchestrator",
+  "subagent_depth": 2,
+  "experimental": {
+    "subagent_depth": 2
+  },
   "share": "manual",
   "autoupdate": true,
   "lsp": true,
