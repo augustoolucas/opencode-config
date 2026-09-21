@@ -1,0 +1,15 @@
+{
+  "$schema": "https://opencode.ai/v2/cli.json",
+  "plugins": [
+    "@cortexkit/opencode-magic-context"
+  ],
+  "diffs": {
+    "wrap": "word"
+  },
+  "session": {
+    "sidebar": "auto",
+    "scrollbar": false,
+    "thinking": "hide"
+  },
+  "animations": true
+}
