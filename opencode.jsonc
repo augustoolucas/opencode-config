@@ -2,7 +2,10 @@
   "$schema": "https://opencode.ai/config.json",
   "plugin": [
     "@cortexkit/opencode-magic-context",
-    "yacao@file:/home/lucas/repos/yacao"
+    [
+      "yacao@git+https://github.com/augustoolucas/yacao.git",
+      { "autoUpdate": true }
+    ]
   ],
   "provider": {
     "commandcode": {
